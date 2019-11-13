@@ -15,8 +15,10 @@ options
 expression  : OPENBR expression CLOSEBR		#parenthesisExp
             | left=expression op=(MUL|DIV) right=expression  #opExp 		
             | left=expression op=(ADD|SUB) right=expression  #opExp
+			// opExpComp: результат операции = bool, операнды: decimal
+			| left=expression op=(EQU|NOTEQU) right=expression  #opExpComp
             | left=expression op=(LT|LE|GT|GE) right=expression #opExpComp
-            // opExpBool: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ = bool, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: bool
+            // opExpBool: результат операции = bool, операнды: bool
 			| left=expression op=(OR|AND) right=expression #opExpBool
             | function #funcExp
 	        | variable #varExp
