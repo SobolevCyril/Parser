@@ -9,15 +9,15 @@ options
 /*
  * Parser Rules
  */
- start      : (expression)? EOF
+ start      : (exp=expression)? EOF
 			;
 
 expression  : OPENBR expression CLOSEBR		#parenthesisExp
             | left=expression op=(MUL|DIV) right=expression  #opExp 		
             | left=expression op=(ADD|SUB) right=expression  #opExp
-			| left=expression op=(EQU|NOTEQU) right=expression  #opExp
-            | left=expression op=(LT|LE|GT|GE) right=expression #opExp
-            | left=expression op=(OR|AND) right=expression #opExp
+			| left=expression op=(EQU|NOTEQU) right=expression  #opExpBool
+            | left=expression op=(LT|LE|GT|GE) right=expression #opExpBool
+            | left=expression op=(OR|AND) right=expression #opExpBool
             | function #funcExp
 	        | variable #varExp
 			| set     #setExp
