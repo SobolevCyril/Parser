@@ -22,37 +22,60 @@ namespace SpeakerApp
                 case SRZParser.ADD: return left + right;
                 case SRZParser.SUB: return left - right;
             }
-            throw new Exception("Неизвестная операция");
+            throw new Exception(String.Format("Неизвестная операция: {0}", SRZLexer.DefaultVocabulary.GetSymbolicName(op)));
         }
 
         public override object VisitOpExp(SRZParser.OpExpContext context)
         {
             var left = Int32.Parse(this.VisitChildren(context.left).ToString());
             var right = Int32.Parse(this.VisitChildren(context.right).ToString());
-            return eval(left, context.op.TokenIndex, right);
+            return eval(left, context.op.Type, right);
         }
 
+        public override object VisitOpExpComp(SRZParser.OpExpCompContext context)
+        {
+            var left = Int32.Parse(this.Visit(context.left).ToString());
+            var right = Int32.Parse(this.Visit(context.right).ToString());
+            switch (context.op.Type)
+            {
+                case SRZParser.EQU: return left == right;
+                case SRZParser.NOTEQU: return left != right;
+                case SRZParser.LT: return left < right;
+                case SRZParser.LE: return left <= right;
+                case SRZParser.GE: return left >= right;
+                case SRZParser.GT: return left > right;
+            }
+            throw new Exception(String.Format("Неизвестная логическая операция: {0}", context.GetText()));
+        }
+
+        public override object VisitOpExpBool(SRZParser.OpExpBoolContext context)
+        {
+            Boolean left = (Boolean)this.Visit(context.left);
+            Boolean right = (Boolean)this.Visit(context.right);
+            switch (context.op.Type)
+            {
+                case SRZParser.OR: return left || right;
+                case SRZParser.AND: return left && right;
+            }
+            throw new Exception(String.Format("Неизвестная логическая операция: {0}", context.GetText()));
+        }
 
         public override object VisitStart(SRZParser.StartContext context)
         {
             //инициализируем переменные для проверки,по идее тут должен быть репозиторий
             // с доступом к полям модели выдела
             DataRepository.Add("M0001", 5);
-
-            return Boolean.Parse(this.VisitChildren(context).ToString());
-            //var sb = new StringBuilder();
-            //var exp = context;
-            //var line = exp.GetText();
-            //Lines.Add(line);
-            //return line;
+            var res = this.Visit(context.expression());
+            return Convert.ToBoolean(res);
         }
             
         public override object VisitVarExp(SRZParser.VarExpContext context)
         {
-            var v = context.variable();
-            // выполняем извлечение значения из словаря значений по имени поля
-            //var value = ValueByVarName(v.GetText());
-            return v.GetText();
+            object val;
+            if (!DataRepository.TryGetValue(context.GetText(), out val))
+                throw new ArgumentException(String.Format("Имя переменной отсутствует в словаре системы: {0}", context.GetText()));
+
+            return val; 
         }
 
         /// <summary>
@@ -63,7 +86,7 @@ namespace SpeakerApp
         /// <return>The visitor result.</return>
         public override object VisitLiteralExp(SRZParser.LiteralExpContext context)
         {
-            return context.literal().ToString();
+            return this.VisitChildren(context);
         }
 
 
@@ -103,8 +126,6 @@ namespace SpeakerApp
         }
 
  
-        
-
         /// <summary>
         /// Visit a parse tree produced by <see cref="SRZParser.params"/>.
         /// </summary>
@@ -161,7 +182,7 @@ namespace SpeakerApp
         /// <return>The visitor result.</return>
         public override object  VisitLiteral( SRZParser.LiteralContext context)
         {
-            switch (context.typ.TokenIndex)
+            switch (context.typ.Type)
             {
                 case SRZParser.INT:
                 {

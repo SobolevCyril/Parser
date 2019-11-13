@@ -87,7 +87,7 @@ namespace SpeakerApp
                 }
 
                 writer.AutoFlush = true;
-                Console.SetOut(writer);
+                //Console.SetOut(writer);
                 StringBuilder text = new StringBuilder();
                 input = File.ReadAllText(@"D:\Users\Cyril\Projects\Antlr\SpeakerApp\SpeakerApp\lexer.txt");
                 //Console.WriteLine("Input the validation rule.");
@@ -103,7 +103,8 @@ namespace SpeakerApp
 
                 var tree = parser.start();
                 var evalVisitor = new Expression();
-                evalVisitor.Visit(tree);
+                // результатом вычисления логического выражения будет true | false
+                Console.WriteLine(evalVisitor.Visit(tree));
                 //foreach (var line in evalVisitor.Lines)
                 //{
                 //    Console.WriteLine(line);
