@@ -27,15 +27,15 @@ namespace SpeakerApp
 
         public override object VisitOpExp(SRZParser.OpExpContext context)
         {
-            var left = Int32.Parse(this.VisitChildren(context.left).ToString());
-            var right = Int32.Parse(this.VisitChildren(context.right).ToString());
+            var left = Int32.Parse(this.Visit(context.left).ToString());
+            var right = Int32.Parse(this.Visit(context.right).ToString());
             return eval(left, context.op.Type, right);
         }
 
         public override object VisitOpExpComp(SRZParser.OpExpCompContext context)
         {
-            var left = Int32.Parse(this.Visit(context.left).ToString());
-            var right = Int32.Parse(this.Visit(context.right).ToString());
+            var left = Decimal.Parse(this.Visit(context.left).ToString());
+            var right = Decimal.Parse(this.Visit(context.right).ToString());
             switch (context.op.Type)
             {
                 case SRZParser.EQU: return left == right;
@@ -86,7 +86,7 @@ namespace SpeakerApp
         /// <return>The visitor result.</return>
         public override object VisitLiteralExp(SRZParser.LiteralExpContext context)
         {
-            return this.VisitChildren(context);
+            return this.Visit(context.literal());
         }
 
 
@@ -99,7 +99,7 @@ namespace SpeakerApp
         /// <return>The visitor result.</return>
         public override object VisitFuncExp(SRZParser.FuncExpContext context)
         {
-            return null;
+            return this.Visit(context.function());
 
         }
 
@@ -122,7 +122,7 @@ namespace SpeakerApp
         /// <return>The visitor result.</return>
         public override object VisitSetExp(SRZParser.SetExpContext context)
         {
-            return null;
+            return this.Visit(context.set());
         }
 
  

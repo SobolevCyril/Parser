@@ -105,10 +105,6 @@ namespace SpeakerApp
                 var evalVisitor = new Expression();
                 // результатом вычисления логического выражения будет true | false
                 Console.WriteLine(evalVisitor.Visit(tree));
-                //foreach (var line in evalVisitor.Lines)
-                //{
-                //    Console.WriteLine(line);
-                //}
 
                 Console.ReadKey();
             }

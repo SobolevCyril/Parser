@@ -90,6 +90,7 @@ public partial class SRZParser : Parser {
 	}
 
 	public partial class StartContext : ParserRuleContext {
+		public ExpressionContext exp;
 		public ITerminalNode Eof() { return GetToken(SRZParser.Eof, 0); }
 		public ExpressionContext expression() {
 			return GetRuleContext<ExpressionContext>(0);
@@ -119,7 +120,7 @@ public partial class SRZParser : Parser {
 			_la = TokenStream.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << OPENBR) | (1L << ID) | (1L << INT) | (1L << NUMBER) | (1L << EQU) | (1L << NOTEQU) | (1L << STRING))) != 0)) {
 				{
-				State = 16; expression(0);
+				State = 16; _localctx.exp = expression(0);
 				}
 			}
 
@@ -171,6 +172,29 @@ public partial class SRZParser : Parser {
 			else return visitor.VisitChildren(this);
 		}
 	}
+	public partial class OpExpCompContext : ExpressionContext {
+		public ExpressionContext left;
+		public IToken op;
+		public ExpressionContext right;
+		public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
+		}
+		public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
+		public ITerminalNode EQU() { return GetToken(SRZParser.EQU, 0); }
+		public ITerminalNode NOTEQU() { return GetToken(SRZParser.NOTEQU, 0); }
+		public ITerminalNode LT() { return GetToken(SRZParser.LT, 0); }
+		public ITerminalNode LE() { return GetToken(SRZParser.LE, 0); }
+		public ITerminalNode GT() { return GetToken(SRZParser.GT, 0); }
+		public ITerminalNode GE() { return GetToken(SRZParser.GE, 0); }
+		public OpExpCompContext(ExpressionContext context) { CopyFrom(context); }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISRZVisitor<TResult> typedVisitor = visitor as ISRZVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitOpExpComp(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
 	public partial class FuncExpContext : ExpressionContext {
 		public FunctionContext function() {
 			return GetRuleContext<FunctionContext>(0);
@@ -206,6 +230,25 @@ public partial class SRZParser : Parser {
 			else return visitor.VisitChildren(this);
 		}
 	}
+	public partial class OpExpBoolContext : ExpressionContext {
+		public ExpressionContext left;
+		public IToken op;
+		public ExpressionContext right;
+		public ExpressionContext[] expression() {
+			return GetRuleContexts<ExpressionContext>();
+		}
+		public ExpressionContext expression(int i) {
+			return GetRuleContext<ExpressionContext>(i);
+		}
+		public ITerminalNode OR() { return GetToken(SRZParser.OR, 0); }
+		public ITerminalNode AND() { return GetToken(SRZParser.AND, 0); }
+		public OpExpBoolContext(ExpressionContext context) { CopyFrom(context); }
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ISRZVisitor<TResult> typedVisitor = visitor as ISRZVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitOpExpBool(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
 	public partial class OpExpContext : ExpressionContext {
 		public ExpressionContext left;
 		public IToken op;
@@ -220,14 +263,6 @@ public partial class SRZParser : Parser {
 		public ITerminalNode DIV() { return GetToken(SRZParser.DIV, 0); }
 		public ITerminalNode ADD() { return GetToken(SRZParser.ADD, 0); }
 		public ITerminalNode SUB() { return GetToken(SRZParser.SUB, 0); }
-		public ITerminalNode EQU() { return GetToken(SRZParser.EQU, 0); }
-		public ITerminalNode NOTEQU() { return GetToken(SRZParser.NOTEQU, 0); }
-		public ITerminalNode LT() { return GetToken(SRZParser.LT, 0); }
-		public ITerminalNode LE() { return GetToken(SRZParser.LE, 0); }
-		public ITerminalNode GT() { return GetToken(SRZParser.GT, 0); }
-		public ITerminalNode GE() { return GetToken(SRZParser.GE, 0); }
-		public ITerminalNode OR() { return GetToken(SRZParser.OR, 0); }
-		public ITerminalNode AND() { return GetToken(SRZParser.AND, 0); }
 		public OpExpContext(ExpressionContext context) { CopyFrom(context); }
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ISRZVisitor<TResult> typedVisitor = visitor as ISRZVisitor<TResult>;
@@ -355,62 +390,62 @@ public partial class SRZParser : Parser {
 						break;
 					case 3:
 						{
-						_localctx = new OpExpContext(new ExpressionContext(_parentctx, _parentState));
-						((OpExpContext)_localctx).left = _prevctx;
+						_localctx = new OpExpCompContext(new ExpressionContext(_parentctx, _parentState));
+						((OpExpCompContext)_localctx).left = _prevctx;
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
 						State = 38;
 						if (!(Precpred(Context, 7))) throw new FailedPredicateException(this, "Precpred(Context, 7)");
 						State = 39;
-						((OpExpContext)_localctx).op = TokenStream.LT(1);
+						((OpExpCompContext)_localctx).op = TokenStream.LT(1);
 						_la = TokenStream.LA(1);
 						if ( !(_la==EQU || _la==NOTEQU) ) {
-							((OpExpContext)_localctx).op = ErrorHandler.RecoverInline(this);
+							((OpExpCompContext)_localctx).op = ErrorHandler.RecoverInline(this);
 						}
 						else {
 							ErrorHandler.ReportMatch(this);
 						    Consume();
 						}
-						State = 40; ((OpExpContext)_localctx).right = expression(8);
+						State = 40; ((OpExpCompContext)_localctx).right = expression(8);
 						}
 						break;
 					case 4:
 						{
-						_localctx = new OpExpContext(new ExpressionContext(_parentctx, _parentState));
-						((OpExpContext)_localctx).left = _prevctx;
+						_localctx = new OpExpCompContext(new ExpressionContext(_parentctx, _parentState));
+						((OpExpCompContext)_localctx).left = _prevctx;
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
 						State = 41;
 						if (!(Precpred(Context, 6))) throw new FailedPredicateException(this, "Precpred(Context, 6)");
 						State = 42;
-						((OpExpContext)_localctx).op = TokenStream.LT(1);
+						((OpExpCompContext)_localctx).op = TokenStream.LT(1);
 						_la = TokenStream.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LT) | (1L << GT) | (1L << LE) | (1L << GE))) != 0)) ) {
-							((OpExpContext)_localctx).op = ErrorHandler.RecoverInline(this);
+							((OpExpCompContext)_localctx).op = ErrorHandler.RecoverInline(this);
 						}
 						else {
 							ErrorHandler.ReportMatch(this);
 						    Consume();
 						}
-						State = 43; ((OpExpContext)_localctx).right = expression(7);
+						State = 43; ((OpExpCompContext)_localctx).right = expression(7);
 						}
 						break;
 					case 5:
 						{
-						_localctx = new OpExpContext(new ExpressionContext(_parentctx, _parentState));
-						((OpExpContext)_localctx).left = _prevctx;
+						_localctx = new OpExpBoolContext(new ExpressionContext(_parentctx, _parentState));
+						((OpExpBoolContext)_localctx).left = _prevctx;
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
 						State = 44;
 						if (!(Precpred(Context, 5))) throw new FailedPredicateException(this, "Precpred(Context, 5)");
 						State = 45;
-						((OpExpContext)_localctx).op = TokenStream.LT(1);
+						((OpExpBoolContext)_localctx).op = TokenStream.LT(1);
 						_la = TokenStream.LA(1);
 						if ( !(_la==AND || _la==OR) ) {
-							((OpExpContext)_localctx).op = ErrorHandler.RecoverInline(this);
+							((OpExpBoolContext)_localctx).op = ErrorHandler.RecoverInline(this);
 						}
 						else {
 							ErrorHandler.ReportMatch(this);
 						    Consume();
 						}
-						State = 46; ((OpExpContext)_localctx).right = expression(6);
+						State = 46; ((OpExpBoolContext)_localctx).right = expression(6);
 						}
 						break;
 					}

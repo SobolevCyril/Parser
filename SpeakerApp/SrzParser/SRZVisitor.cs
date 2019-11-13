@@ -53,6 +53,13 @@ public interface ISRZVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitLiteralExp([NotNull] SRZParser.LiteralExpContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>opExpComp</c>
+	/// labeled alternative in <see cref="SRZParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOpExpComp([NotNull] SRZParser.OpExpCompContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>funcExp</c>
 	/// labeled alternative in <see cref="SRZParser.expression"/>.
 	/// </summary>
@@ -73,6 +80,13 @@ public interface ISRZVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitSetExp([NotNull] SRZParser.SetExpContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>opExpBool</c>
+	/// labeled alternative in <see cref="SRZParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOpExpBool([NotNull] SRZParser.OpExpBoolContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>opExp</c>
 	/// labeled alternative in <see cref="SRZParser.expression"/>.
