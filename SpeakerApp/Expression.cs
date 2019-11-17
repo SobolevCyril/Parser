@@ -1,17 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 using Roslesinforg.Sigma.SrzParser;
+using Antlr4.Runtime.Misc;
 
 namespace SpeakerApp
 {
+
+ 
+    public class SrzFunction
+    {
+        // Проверка, что хотя бы один экземпляр макета удовлетворяет заданному условию
+        public static object Any(string maket, bool condition)
+        {
+            return condition ? 1 :0;
+        }
+    }
+    
     public class Expression : SRZBaseVisitor<object>
     {
         public List<String> Lines = new List<String>();
         //public List<String> FieldValues = new List<string>();
         private Dictionary<string, object> DataRepository = new Dictionary<string, object>();
+        private Dictionary<string, object> FuncRepository = new Dictionary<string, object>();
         
         private int eval(int left, int op, int right)
         {
@@ -59,12 +73,37 @@ namespace SpeakerApp
             }
             throw new Exception(String.Format("Неизвестная логическая операция: {0}", context.GetText()));
         }
+        
+        // Сравнение значения слева с множеством справа
+        public override object VisitOpSetComp(SRZParser.OpSetCompContext context)
+        {
+            int value  = this.Visit(context.left);
+            List<Range<int>> range = (Boolean)this.Visit(context.right);
+            switch (context.op.Type)
+            {
+                case SRZParser.EQU: return range.ForEach(r=>r.ContainsValue(value));
+                case SRZParser.NOTEQU: return left && right;
+            }
+            throw new Exception(String.Format("Неизвестная логическая операция: {0}", context.GetText()));
+        }
 
         public override object VisitStart(SRZParser.StartContext context)
         {
             //инициализируем переменные для проверки,по идее тут должен быть репозиторий
             // с доступом к полям модели выдела
-            DataRepository.Add("M0001", 5);
+            DataRepository.Add("m0001", 5);
+            DataRepository.Add("m1001", 3);
+            DataRepository.Add("m1002", 3);
+            DataRepository.Add("m1003", 3);
+            DataRepository.Add("m1004", 3);
+            DataRepository.Add("m1005", 3);
+            DataRepository.Add("m1006", 3);
+            DataRepository.Add("m1007", 3);
+            DataRepository.Add("m1008", 3);
+            DataRepository.Add("m1009", 3);
+            DataRepository.Add("m1010", 3);
+            DataRepository.Add("m1011", 3);
+
             var res = this.Visit(context.expression());
             return Convert.ToBoolean(res);
         }
@@ -72,9 +111,9 @@ namespace SpeakerApp
         public override object VisitVarExp(SRZParser.VarExpContext context)
         {
             object val;
-            if (!DataRepository.TryGetValue(context.GetText(), out val))
-                throw new ArgumentException(String.Format("Имя переменной отсутствует в словаре системы: {0}", context.GetText()));
-
+            if (!DataRepository.TryGetValue(context.GetText().ToLowerInvariant(), out val))
+                //throw new ArgumentException(String.Format("Имя переменной отсутствует в словаре системы: {0}", context.GetText()));
+                val = 1;
             return val; 
         }
 
@@ -115,18 +154,6 @@ namespace SpeakerApp
         }
 
         /// <summary>
-        /// Visit a parse tree produced by the <c>setExp</c>
-        /// labeled alternative in <see cref="SRZParser.expression"/>.
-        /// </summary>
-        /// <param name="context">The parse tree.</param>
-        /// <return>The visitor result.</return>
-        public override object VisitSetExp(SRZParser.SetExpContext context)
-        {
-            return this.Visit(context.set());
-        }
-
- 
-        /// <summary>
         /// Visit a parse tree produced by <see cref="SRZParser.params"/>.
         /// </summary>
         /// <param name="context">The parse tree.</param>
@@ -136,15 +163,6 @@ namespace SpeakerApp
             return null;
         }
 
-        /// <summary>
-        /// Visit a parse tree produced by <see cref="SRZParser.function"/>.
-        /// </summary>
-        /// <param name="context">The parse tree.</param>
-        /// <return>The visitor result.</return>
-        public override object  VisitFunction(SRZParser.FunctionContext context)
-        {
-            return null;
-        }
         /// <summary>
         /// Visit a parse tree produced by <see cref="SRZParser.variable"/>.
         /// </summary>
@@ -164,7 +182,10 @@ namespace SpeakerApp
         /// <return>The visitor result.</return>
         public override object VisitRange(SRZParser.RangeContext context)
         {
-            return null;
+            return new Range<int>()
+                { Minimum = Int32.Parse(context.@from.Text),
+                  Maximum = Int32.Parse(context.to.Text)
+                };
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="SRZParser.set"/>.
@@ -173,7 +194,7 @@ namespace SpeakerApp
         /// <return>The visitor result.</return>
         public override object VisitSet(SRZParser.SetContext context)
         {
-            return null;
+            return 5;
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="SRZParser.literal"/>.
@@ -199,5 +220,11 @@ namespace SpeakerApp
             }
             throw new Exception("Неизвестный тип данных");
         }
+
+        public override object VisitFnAny([NotNull] SRZParser.FnAnyContext context)
+        {
+            return SrzFunction.Any(context.mak.Text, (bool)this.Visit(context.cond));
+        }
+
     }
 }

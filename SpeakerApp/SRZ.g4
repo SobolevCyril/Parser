@@ -1,7 +1,7 @@
 grammar SRZ;
 options
 {
-   language = CSharp;
+   //language = CSharp;
    //language = Cpp;
 }
 @parser::namespace { Roslesinforg.Sigma.ExpressionParser }
@@ -16,13 +16,13 @@ expression  : OPENBR expression CLOSEBR		#parenthesisExp
             | left=expression op=(MUL|DIV) right=expression  #opExp 		
             | left=expression op=(ADD|SUB) right=expression  #opExp
 			// opExpComp: результат операции = bool, операнды: decimal
+			| left=expression op=(EQU|NOTEQU) right=set  #opSetComp
 			| left=expression op=(EQU|NOTEQU) right=expression  #opExpComp
             | left=expression op=(LT|LE|GT|GE) right=expression #opExpComp
             // opExpBool: результат операции = bool, операнды: bool
 			| left=expression op=(OR|AND) right=expression #opExpBool
             | function #funcExp
 	        | variable #varExp
-			| set     #setExp
             | literal #literalExp
             ;
 
@@ -31,13 +31,17 @@ params
   ;
 
 function
-  :  ID OPENBR params? CLOSEBR  
+  : fnAny
   ;
+
 variable : ID;
-range    : (INT | (INT DOT DOT INT)) (COMMA range)*;
-set      : (EQU|NOTEQU)  range;  
+range    : from=INT DOT DOT DOT? to=INT;
+set      : (literal|range) (COMMA (literal | range) )*;   
 literal  : typ=(INT | NUMBER | STRING)
          ;
+
+// function rules
+fnAny : 'Any' OPENBR mak=ID COMMA cond=expression CLOSEBR;
 
 /*
  * Lexer Rules

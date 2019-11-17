@@ -89,7 +89,7 @@ namespace SpeakerApp
                 writer.AutoFlush = true;
                 //Console.SetOut(writer);
                 StringBuilder text = new StringBuilder();
-                input = File.ReadAllText(@"D:\Users\Cyril\Projects\Antlr\SpeakerApp\SpeakerApp\lexer.txt");
+                input = File.ReadAllText(@"..\..\lexer1.txt");
                 //Console.WriteLine("Input the validation rule.");
 
 
