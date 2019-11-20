@@ -77,12 +77,13 @@ namespace SpeakerApp
         // Сравнение значения слева с множеством справа
         public override object VisitOpSetComp(SRZParser.OpSetCompContext context)
         {
-            int value  = this.Visit(context.left);
-            List<Range<int>> range = (Boolean)this.Visit(context.right);
+			int value  = Convert.ToInt32(this.Visit(context.left));
+            List<Range<int>> ranges = (List<Range<int>>)this.Visit(context.right);
+			bool isValueInSet = (ranges.Any(r => r.ContainsValue(value)));
             switch (context.op.Type)
             {
-                case SRZParser.EQU: return range.ForEach(r=>r.ContainsValue(value));
-                case SRZParser.NOTEQU: return left && right;
+                case SRZParser.EQU: return isValueInSet;
+                case SRZParser.NOTEQU: return !isValueInSet; 
             }
             throw new Exception(String.Format("Неизвестная логическая операция: {0}", context.GetText()));
         }
@@ -194,7 +195,10 @@ namespace SpeakerApp
         /// <return>The visitor result.</return>
         public override object VisitSet(SRZParser.SetContext context)
         {
-            return 5;
+			// Проверяем, из чего состоит множестово, для этого рассматриваем отдельно литералы и множества
+			foreach (var elem in context.literal()) { Visit(elem)   };
+			//return VisitChildren(context.range);
+			//return ;
         }
         /// <summary>
         /// Visit a parse tree produced by <see cref="SRZParser.literal"/>.
