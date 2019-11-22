@@ -53,13 +53,6 @@ public interface ISRZVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitOpSetComp([NotNull] SRZParser.OpSetCompContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>literalExp</c>
-	/// labeled alternative in <see cref="SRZParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitLiteralExp([NotNull] SRZParser.LiteralExpContext context);
-	/// <summary>
 	/// Visit a parse tree produced by the <c>opExpComp</c>
 	/// labeled alternative in <see cref="SRZParser.expression"/>.
 	/// </summary>
@@ -95,11 +88,12 @@ public interface ISRZVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitOpExp([NotNull] SRZParser.OpExpContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SRZParser.params"/>.
+	/// Visit a parse tree produced by the <c>constExp</c>
+	/// labeled alternative in <see cref="SRZParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitParams([NotNull] SRZParser.ParamsContext context);
+	Result VisitConstExp([NotNull] SRZParser.ConstExpContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="SRZParser.function"/>.
 	/// </summary>
@@ -125,11 +119,11 @@ public interface ISRZVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitSet([NotNull] SRZParser.SetContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SRZParser.literal"/>.
+	/// Visit a parse tree produced by <see cref="SRZParser.constant"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitLiteral([NotNull] SRZParser.LiteralContext context);
+	Result VisitConstant([NotNull] SRZParser.ConstantContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="SRZParser.fnAny"/>.
 	/// </summary>

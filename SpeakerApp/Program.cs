@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Antlr4.Runtime;
 using Roslesinforg.Sigma.SrzParser;
+using Antlr4.StringTemplate;
 
 namespace SpeakerApp
 {
@@ -87,26 +88,27 @@ namespace SpeakerApp
                 }
 
                 writer.AutoFlush = true;
-                //Console.SetOut(writer);
+                Console.SetOut(writer);
                 StringBuilder text = new StringBuilder();
-                input = File.ReadAllText(@"..\..\lexer1.txt");
+                input = File.ReadAllText(@"..\..\lexer5.txt");
                 //Console.WriteLine("Input the validation rule.");
 
 
                 AntlrInputStream inputStream = new AntlrInputStream(input);
                 SRZLexer lexer = new SRZLexer(inputStream);
                 CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
-                // debug
-                //Program.PrintDebugInfo(lexer);
-                //
-                var parser = new SRZParser(commonTokenStream);
+				// Внимание, отладка мешает запускать построение дерева
+				Program.PrintDebugInfo(lexer);
+				//
 
-                var tree = parser.start();
-                var evalVisitor = new Expression();
-                // результатом вычисления логического выражения будет true | false
-                Console.WriteLine(evalVisitor.Visit(tree));
+				var parser = new SRZParser(commonTokenStream);
 
-                Console.ReadKey();
+				var tree = parser.start();
+				var evalVisitor = new Expression();
+				// результатом вычисления логического выражения будет true | false
+				Console.WriteLine(evalVisitor.Visit(tree));
+
+				Console.ReadKey();
             }
             catch (Exception ex)
             {

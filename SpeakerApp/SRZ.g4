@@ -1,7 +1,7 @@
 grammar SRZ;
 options
 {
-   //language = CSharp;
+   language = CSharp;
    //language = Cpp;
 }
 @parser::namespace { Roslesinforg.Sigma.ExpressionParser }
@@ -13,31 +13,32 @@ options
 			;
 
 expression  : OPENBR expression CLOSEBR		#parenthesisExp
+			| left=expression op=(EQU|NOTEQU) right=set  #opSetComp
             | left=expression op=(MUL|DIV) right=expression  #opExp 		
             | left=expression op=(ADD|SUB) right=expression  #opExp
 			// opExpComp: результат операции = bool, операнды: decimal
-			| left=expression op=(EQU|NOTEQU) right=set  #opSetComp
 			| left=expression op=(EQU|NOTEQU) right=expression  #opExpComp
             | left=expression op=(LT|LE|GT|GE) right=expression #opExpComp
             // opExpBool: результат операции = bool, операнды: bool
 			| left=expression op=(OR|AND) right=expression #opExpBool
             | function #funcExp
 	        | variable #varExp
-            | literal #literalExp
+            | constant #constExp
             ;
 
-params
-  :  expression (COMMA expression)* 
-  ;
+//params
+//  :  expression (COMMA expression)* 
+//  ;
 
 function
   : fnAny
   ;
 
 variable : ID;
-range    : from=INT DOT DOT DOT? to=INT;
-set      : (literal|range) (COMMA (literal | range) )*;   
-literal  : typ=(INT | NUMBER | STRING)
+// ƒопускаютс€ следующие вариации 1..4 или 0.1..99.4 или 3..5.5
+range    : from=(INT|NUMBER) DOT DOT DOT? to=(INT | NUMBER);
+set      : (INT|NUMBER|range) (COMMA (INT|NUMBER|range))*?;   
+constant : typ=(INT | NUMBER | STRING)
          ;
 
 // function rules
