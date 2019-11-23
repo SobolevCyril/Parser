@@ -13,29 +13,36 @@ options
 			;
 
 expression  : OPENBR expression CLOSEBR		#parenthesisExp
+			| left=expression op=(EQU|NOTEQU) right=set  #opSetComp
             | left=expression op=(MUL|DIV) right=expression  #opExp 		
             | left=expression op=(ADD|SUB) right=expression  #opExp
-			| left=expression op=(EQU|NOTEQU) right=expression  #opExpBool
-            | left=expression op=(LT|LE|GT|GE) right=expression #opExpBool
-            | left=expression op=(OR|AND) right=expression #opExpBool
+			// opExpComp: результат операции = bool, операнды: decimal
+			| left=expression op=(EQU|NOTEQU) right=expression  #opExpComp
+            | left=expression op=(LT|LE|GT|GE) right=expression #opExpComp
+            // opExpBool: результат операции = bool, операнды: bool
+			| left=expression op=(OR|AND) right=expression #opExpBool
             | function #funcExp
 	        | variable #varExp
-			| set     #setExp
-            | literal #literalExp
+            | constant #constExp
             ;
 
-params
-  :  expression (COMMA expression)* 
-  ;
+//params
+//  :  expression (COMMA expression)* 
+//  ;
 
 function
-  :  ID OPENBR params? CLOSEBR  
+  : fnAny
   ;
+
 variable : ID;
-range    : (INT | (INT DOT DOT INT)) (COMMA range)*;
-set      : (EQU|NOTEQU)  range;  
-literal  : typ=(INT | NUMBER | STRING)
+// ƒопускаютс€ следующие вариации 1..4 или 0.1..99.4 или 3..5.5
+range    : from=(INT|NUMBER) DOT DOT DOT? to=(INT | NUMBER);
+set      : (INT|NUMBER|range) (COMMA (INT|NUMBER|range))*?;   
+constant : typ=(INT | NUMBER | STRING)
          ;
+
+// function rules
+fnAny : 'Any' OPENBR mak=ID COMMA cond=expression CLOSEBR;
 
 /*
  * Lexer Rules

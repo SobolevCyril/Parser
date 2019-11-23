@@ -56,7 +56,7 @@ public partial class SRZBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, 
 	/// <return>The visitor result.</return>
 	public virtual Result VisitVarExp([NotNull] SRZParser.VarExpContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>literalExp</c>
+	/// Visit a parse tree produced by the <c>opSetComp</c>
 	/// labeled alternative in <see cref="SRZParser.expression"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -65,7 +65,18 @@ public partial class SRZBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, 
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitLiteralExp([NotNull] SRZParser.LiteralExpContext context) { return VisitChildren(context); }
+	public virtual Result VisitOpSetComp([NotNull] SRZParser.OpSetCompContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>opExpComp</c>
+	/// labeled alternative in <see cref="SRZParser.expression"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitOpExpComp([NotNull] SRZParser.OpExpCompContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by the <c>funcExp</c>
 	/// labeled alternative in <see cref="SRZParser.expression"/>.
@@ -89,7 +100,7 @@ public partial class SRZBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, 
 	/// <return>The visitor result.</return>
 	public virtual Result VisitParenthesisExp([NotNull] SRZParser.ParenthesisExpContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by the <c>setExp</c>
+	/// Visit a parse tree produced by the <c>opExpBool</c>
 	/// labeled alternative in <see cref="SRZParser.expression"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
@@ -98,7 +109,7 @@ public partial class SRZBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, 
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitSetExp([NotNull] SRZParser.SetExpContext context) { return VisitChildren(context); }
+	public virtual Result VisitOpExpBool([NotNull] SRZParser.OpExpBoolContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by the <c>opExp</c>
 	/// labeled alternative in <see cref="SRZParser.expression"/>.
@@ -111,7 +122,8 @@ public partial class SRZBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, 
 	/// <return>The visitor result.</return>
 	public virtual Result VisitOpExp([NotNull] SRZParser.OpExpContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SRZParser.params"/>.
+	/// Visit a parse tree produced by the <c>constExp</c>
+	/// labeled alternative in <see cref="SRZParser.expression"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -119,7 +131,7 @@ public partial class SRZBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, 
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitParams([NotNull] SRZParser.ParamsContext context) { return VisitChildren(context); }
+	public virtual Result VisitConstExp([NotNull] SRZParser.ConstExpContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="SRZParser.function"/>.
 	/// <para>
@@ -161,7 +173,7 @@ public partial class SRZBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, 
 	/// <return>The visitor result.</return>
 	public virtual Result VisitSet([NotNull] SRZParser.SetContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="SRZParser.literal"/>.
+	/// Visit a parse tree produced by <see cref="SRZParser.constant"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -169,6 +181,16 @@ public partial class SRZBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, 
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitLiteral([NotNull] SRZParser.LiteralContext context) { return VisitChildren(context); }
+	public virtual Result VisitConstant([NotNull] SRZParser.ConstantContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="SRZParser.fnAny"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitFnAny([NotNull] SRZParser.FnAnyContext context) { return VisitChildren(context); }
 }
 } // namespace Roslesinforg.Sigma.SrzParser
