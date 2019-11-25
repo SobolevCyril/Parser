@@ -1,0 +1,3 @@
+not Any(T01, m0505>2 and t0102>0 and t0107=0) &
+not Any(T01, m0505=1,2 and t0102>0 and t0107>0)
+

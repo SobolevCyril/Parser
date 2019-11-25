@@ -1,0 +1,19 @@
+(m23=1 and
+((m2301>0 and m2302=0 and m2303=0 and m2304=0 and m2305=0 and m2306=0 and m2307=0 and m2308=0) or 
+(m2301>0 and m2302>0 and m2303=0 and m2304=0 and m2305=0 and m2306=0 and m2307=0 and m2308=0) or
+(m2301>0 and m2302>0 and m2303>0 and m2304=0 and m2305=0 and m2306=0 and m2307=0 and m2308=0) or
+(m2301>0 and m2302>0 and m2303>0 and m2304>0 and m2305=0 and m2306=0 and m2307=0 and m2308=0) or
+(m2301>0 and m2302>0 and m2303>0 and m2304>0 and m2305>0 and m2306=0 and m2307=0 and m2308=0) or
+(m2301>0 and m2302>0 and m2303>0 and m2304>0 and m2305>0 and m2306>0 and m2307=0 and m2308=0) or
+(m2301>0 and m2302>0 and m2303>0 and m2304>0 and m2305>0 and m2306>0 and m2307>0 and m2308=0) or
+(m2301>0 and m2302>0 and m2303>0 and m2304>0 and m2305>0 and m2306>0 and m2307>0 and m2308>0)))
+or
+(m23=2 and (m2301>0 and m2302>0 and m2303>0 and m2304>0 and m2305>0 and m2306>0 and m2307>0 and m2308>0) and
+((m2301[2]>0 and m2302[2]=0 and m2303[2]=0 and m2304[2]=0 and m2305[2]=0 and m2306[2]=0 and m2307[2]=0 and m2308[2]=0) or 
+(m2301[2]>0 and m2302[2]>0 and m2303[2]=0 and m2304[2]=0 and m2305[2]=0 and m2306[2]=0 and m2307[2]=0 and m2308[2]=0) or
+(m2301[2]>0 and m2302[2]>0 and m2303[2]>0 and m2304[2]=0 and m2305[2]=0 and m2306[2]=0 and m2307[2]=0 and m2308[2]=0) or
+(m2301[2]>0 and m2302[2]>0 and m2303[2]>0 and m2304[2]>0 and m2305[2]=0 and m2306[2]=0 and m2307[2]=0 and m2308[2]=0) or
+(m2301[2]>0 and m2302[2]>0 and m2303[2]>0 and m2304[2]>0 and m2305[2]>0 and m2306[2]=0 and m2307[2]=0 and m2308[2]=0) or
+(m2301[2]>0 and m2302[2]>0 and m2303[2]>0 and m2304[2]>0 and m2305[2]>0 and m2306[2]>0 and m2307[2]=0 and m2308[2]=0) or
+(m2301[2]>0 and m2302[2]>0 and m2303[2]>0 and m2304[2]>0 and m2305[2]>0 and m2306[2]>0 and m2307[2]>0 and m2308[2]=0) or
+(m2301[2]>0 and m2302[2]>0 and m2303[2]>0 and m2304[2]>0 and m2305[2]>0 and m2306[2]>0 and m2307[2]>0 and m2308[2]>0)))
