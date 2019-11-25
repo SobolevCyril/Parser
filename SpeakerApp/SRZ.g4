@@ -16,17 +16,11 @@ expression  : OPENBR expression CLOSEBR		#parenthesisExp
 			| left=expression op=(EQU|NOTEQU) right=set  #opSetComp
             | left=expression op=(MUL|DIV) right=expression  #opExp 		
             | left=expression op=(ADD|SUB) right=expression  #opExp
-<<<<<<< HEAD
-			| left=expression op=(EQU|NOTEQU) right=expression  #opExpBool
-            | left=expression op=(LT|LE|GT|GE) right=expression #opExpBool
-            | left=expression op=(OR|AND) right=expression #opExpBool
-=======
 			// opExpComp: результат операции = bool, операнды: decimal
 			| left=expression op=(EQU|NOTEQU) right=expression  #opExpComp
             | left=expression op=(LT|LE|GT|GE) right=expression #opExpComp
             // opExpBool: результат операции = bool, операнды: bool
 			| left=expression op=(OR|AND) right=expression #opExpBool
->>>>>>> test
             | function #funcExp
 	        | variable #varExp
             | constant #constExp
