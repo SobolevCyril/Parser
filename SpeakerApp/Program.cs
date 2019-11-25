@@ -90,7 +90,7 @@ namespace SpeakerApp
                 writer.AutoFlush = true;
                 //Console.SetOut(writer);
                 StringBuilder text = new StringBuilder();
-                input = File.ReadAllText(@"..\..\lexer5.txt");
+                input = File.ReadAllText(@"..\..\sample8.txt");
                 //Console.WriteLine("Input the validation rule.");
 
 
