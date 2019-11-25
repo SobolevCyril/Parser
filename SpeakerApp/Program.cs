@@ -88,9 +88,9 @@ namespace SpeakerApp
                 }
 
                 writer.AutoFlush = true;
-                Console.SetOut(writer);
+                //Console.SetOut(writer);
                 StringBuilder text = new StringBuilder();
-                input = File.ReadAllText(@"..\..\lexer5.txt");
+                input = File.ReadAllText(@"..\..\lexer4.txt");
                 //Console.WriteLine("Input the validation rule.");
 
 
@@ -98,7 +98,7 @@ namespace SpeakerApp
                 SRZLexer lexer = new SRZLexer(inputStream);
                 CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
 				// Внимание, отладка мешает запускать построение дерева
-				Program.PrintDebugInfo(lexer);
+				//Program.PrintDebugInfo(lexer);
 				//
 
 				var parser = new SRZParser(commonTokenStream);

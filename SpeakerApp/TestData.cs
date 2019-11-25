@@ -13,7 +13,7 @@ namespace SpeakerApp
 			DataRepository.Add("m0001", 1);
 			DataRepository.Add("m1001", 1);
 			DataRepository.Add("m1002", 6);
-			DataRepository.Add("m1003", /*100*/0);
+			DataRepository.Add("m1003", 100);
 			DataRepository.Add("m1004", 70);
 			DataRepository.Add("m1005", 23);
 			DataRepository.Add("m1006", 24);
