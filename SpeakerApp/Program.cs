@@ -97,18 +97,24 @@ namespace SpeakerApp
                 AntlrInputStream inputStream = new AntlrInputStream(input);
                 SRZLexer lexer = new SRZLexer(inputStream);
                 CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
-				// Внимание, отладка мешает запускать построение дерева
-				//Program.PrintDebugInfo(lexer);
-				//
+                // Внимание, отладка мешает запускать построение дерева
+                //Program.PrintDebugInfo(lexer);
+                //
 
-				var parser = new SRZParser(commonTokenStream);
+                var parser = new SRZParser(commonTokenStream);
+                parser.RemoveErrorListeners();
+                parser.AddErrorListener(new ErrorListener()); // add ours
+                var tree = parser.start();
+                var evalVisitor = new Expression();
+                // результатом вычисления логического выражения будет true | false
+                Console.WriteLine(evalVisitor.Visit(tree));
 
-				var tree = parser.start();
-				var evalVisitor = new Expression();
-				// результатом вычисления логического выражения будет true | false
-				Console.WriteLine(evalVisitor.Visit(tree));
-
-				Console.ReadKey();
+                Console.ReadKey();
+            }
+            catch (ParseCancellationException ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                Console.ReadKey();
             }
             catch (Exception ex)
             {

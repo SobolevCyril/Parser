@@ -36,7 +36,14 @@ namespace SpeakerApp
 			DataRepository.Add("t0107", 2);
 			DataRepository.Add("m23", 1);
 			DataRepository.Add("m2301", 1);
+            DataRepository.Add("m2302", 1);
+            DataRepository.Add("m2303", 1);
+            DataRepository.Add("m2304", 1);
+            DataRepository.Add("m2305", 1);
+            DataRepository.Add("m2306", 1);
+            DataRepository.Add("m2307", 1);
+            DataRepository.Add("m2308", 1);
 
-		}
-	}
+        }
+    }
 }
